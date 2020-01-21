@@ -177,7 +177,11 @@ void Measurement::analyze()
 
     //read auxiliary data
     party["auxiliaryData"] = m_auxiliaryData;
-    
+
+    map <string, string> argumentsToFile;
+    copy(m_arguments.begin(), m_arguments.end(), inserter(argumentsToFile, argumentsToFile.begin()));
+    party["parameters"] = argumentsToFile;
+
 
     //send json object to create file
     createJsonFile(party, fileName);
