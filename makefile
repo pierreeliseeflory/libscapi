@@ -41,8 +41,8 @@ ifeq ($(uname_os), Linux)
 endif
 ifeq ($(uname_os), Darwin)
     INC            = -Iinstall/include -Iinstall/include/OTExtensionBristol -Iinstall/include/libOTe \
-    -Iinstall/include/libOTe/cryptoTools
-    LIBRARIES_DIR  = -Linstall/lib
+    -Iinstall/include/libOTe/cryptoTools -I/usr/local/opt/openssl@1.1/include
+    LIBRARIES_DIR  = -Linstall/lib -L/usr/local/opt/openssl@1.1/lib
 endif
 
 ifeq ($(uname_arch), x86_64)

@@ -2,6 +2,7 @@
 // Created by liork on 3/18/19.
 //
 
+#ifdef __x86_64__
 #include <assert.h>
 #include <errno.h>
 #include <unistd.h>
@@ -351,6 +352,8 @@ void CommUDP::updateConnections()
             std::this_thread::sleep_for(std::chrono::milliseconds(min_check - current));
     }
 }
+
+#endif
 
 
 
