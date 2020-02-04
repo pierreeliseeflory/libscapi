@@ -3,6 +3,7 @@
 //
 
 #ifdef __x86_64__
+#ifndef __APPLE__
 #include <assert.h>
 #include <errno.h>
 #include <unistd.h>
@@ -354,6 +355,4 @@ void CommUDP::updateConnections()
 }
 
 #endif
-
-
-
+#endif

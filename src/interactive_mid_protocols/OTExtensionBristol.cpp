@@ -1,4 +1,7 @@
+
 #ifdef __x86_64__
+#ifndef __APPLE__
+
 #include "../../include/interactive_mid_protocols/OTExtensionBristol.hpp"
 
 
@@ -389,4 +392,6 @@ shared_ptr<OTBatchROutput> OTExtensionBristolReceiver::transfer(OTBatchRInput * 
 	}
 
 }
+
+#endif
 #endif

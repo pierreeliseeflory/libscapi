@@ -170,9 +170,6 @@ compile-blake:
 compile-libote:
 	@echo "Compiling libOTe library..."
 	@cp -r lib/libOTe $(builddir)/libOTe
-ifeq ($(uname_os), Darwin)
-	@cd $(builddir)/libOTe/cryptoTools/thirdparty/miracl/source && bash linux64 && cd ../../../../../../
-endif
 	@cmake $(builddir)/libOTe/CMakeLists.txt -DCMAKE_BUILD_TYPE=Release -DLIBSCAPI_ROOT=$(PWD)
 	@$(MAKE) -C $(builddir)/libOTe/
 	@cp $(builddir)/libOTe/lib/*.a install/lib/
