@@ -112,7 +112,7 @@ PrgFromOpenSSLAES::PrgFromOpenSSLAES() : cachedSize(DEFAULT_NUM_OF_RANDOMS), isS
     cipherChunk = (block *)memalign(16, sizeof(block) * cachedSize);
     indexPlaintext = (block *)memalign(16, sizeof(block) * cachedSize);
 #endif
-    //assin zero to the array of indices which are set as the plaintext. Note that we only use the list sagnificant long part of each 128 bit.
+    //assign zero to the array of indices which are set as the plaintext. Note that we only use the least significant long part of each 128 bit.
     //memset(indexPlaintext, 0, sizeof(block) * cachedSize);
 
     long *plaintextArray = (long *)indexPlaintext;
