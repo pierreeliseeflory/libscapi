@@ -112,12 +112,12 @@ PrgFromOpenSSLAES::PrgFromOpenSSLAES() : cachedSize(DEFAULT_NUM_OF_RANDOMS), isS
     cipherChunk = (block *)memalign(16, sizeof(block) * cachedSize);
     indexPlaintext = (block *)memalign(16, sizeof(block) * cachedSize);
 #endif
-    //assin zero to the array of indices which are set as the plaintext. Note that we only use the list sagnificant long part of each 128 bit.
+    //assign zero to the array of indices which are set as the plaintext. Note that we only use the least significant long part of each 128 bit.
     //memset(indexPlaintext, 0, sizeof(block) * cachedSize);
 
     long *plaintextArray = (long *)indexPlaintext;
 
-    //go over the array and set the 64 list sagnificat bits for evey 128 bit value, we use only half of the 128 bit variables
+    //go over the array and set the 64 least significat bits for evey 128 bit value, we use only half of the 128 bit variables
     for (long i = 0; i < cachedSize; i++) {
         plaintextArray[i * 2 + 1] = i;
         plaintextArray[i * 2] = 0;
@@ -134,12 +134,12 @@ PrgFromOpenSSLAES::PrgFromOpenSSLAES(int cachedSize_ ) : cachedSize(cachedSize_)
     cipherChunk = (block *)memalign(16, sizeof(block) * cachedSize);
     indexPlaintext = (block *)memalign(16, sizeof(block) * cachedSize);
 #endif
-    //assin zero to the array of indices which are set as the plaintext. Note that we only use the list sagnificant long part of each 128 bit.
+    //assign zero to the array of indices which are set as the plaintext. Note that we only use the least significant long part of each 128 bit.
     //memset(indexPlaintext, 0, sizeof(block) * cachedSize);
 
     long *plaintextArray = (long *)indexPlaintext;
 
-    //go over the array and set the 64 list sagnificat bits for evey 128 bit value, we use only half of the 128 bit variables
+    //go over the array and set the 64 least significat bits for evey 128 bit value, we use only half of the 128 bit variables
     for (long i = 0; i < cachedSize; i++) {
         plaintextArray[i * 2 + 1] = i;
         plaintextArray[i * 2] = 0;
@@ -155,12 +155,12 @@ PrgFromOpenSSLAES::PrgFromOpenSSLAES(int cachedSize_, bool isStrict_ ) : cachedS
     cipherChunk = (block *)memalign(16, sizeof(block) * cachedSize);
     indexPlaintext = (block *)memalign(16, sizeof(block) * cachedSize);
 #endif
-    //assin zero to the array of indices which are set as the plaintext. Note that we only use the list sagnificant long part of each 128 bit.
+    //assign zero to the array of indices which are set as the plaintext. Note that we only use the least significant long part of each 128 bit.
     //memset(indexPlaintext, 0, sizeof(block) * cachedSize);
 
     long *plaintextArray = (long *)indexPlaintext;
 
-    //go over the array and set the 64 list sagnificat bits for evey 128 bit value, we use only half of the 128 bit variables
+    //go over the array and set the 64 least significat bits for evey 128 bit value, we use only half of the 128 bit variables
     for (long i = 0; i < cachedSize; i++) {
         plaintextArray[i * 2 + 1] = i;
         plaintextArray[i * 2] = 0;
@@ -187,12 +187,12 @@ PrgFromOpenSSLAES::PrgFromOpenSSLAES(int cachedSize_, bool isStrict_, byte * cac
 #elif __arch64__
     indexPlaintext = (block *)memalign(16, sizeof(block) * cachedSize);
 #endif
-    //assin zero to the array of indices which are set as the plaintext. Note that we only use the list sagnificant long part of each 128 bit.
+    //assign zero to the array of indices which are set as the plaintext. Note that we only use the least significant long part of each 128 bit.
     //memset(indexPlaintext, 0, sizeof(block) * cachedSize);
 
     long *plaintextArray = (long *)indexPlaintext;
 
-    //go over the array and set the 64 list sagnificat bits for evey 128 bit value, we use only half of the 128 bit variables
+    //go over the array and set the 64 least significat bits for evey 128 bit value, we use only half of the 128 bit variables
     for (long i = 0; i < cachedSize; i++) {
         plaintextArray[i * 2 + 1] = i;
         plaintextArray[i * 2] = 0;
