@@ -26,3 +26,6 @@
 - git clone https://github.com/cryptobiu/libscapi.git
 - cd libscapi
 - make
+
+**NOTE**: If you installed boost not on custom location you should add parameter to `make`:
+`make BOOST_ROOT=<path>`
