@@ -2,6 +2,8 @@
 // Created by roee on 1/16/19.
 //
 
+#ifdef __x86_64__
+#ifndef __APPLE__
 #include "../../include/comm/utils.h"
 
 #include <sys/time.h>
@@ -26,3 +28,6 @@ IUINT64 iclock64(void) {
 IUINT32 iclock() {
   return (IUINT32) (iclock64() & 0xfffffffful);
 }
+
+#endif
+#endif

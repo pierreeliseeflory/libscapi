@@ -88,7 +88,7 @@ endif
 endif # Linux c++11
 
 ifeq ($(uname_os), Darwin)
-    libs:  compile-ntl compile-blake compile-kcp
+    libs:  compile-ntl compile-blake
 endif # Darwin c++11
 endif # c++11
 
