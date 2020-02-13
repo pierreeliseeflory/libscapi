@@ -11,7 +11,7 @@ elseif(APPLE)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mavx -maes -msse4.1 -mpclmul -mbmi2 -O3")
     INCLUDE_DIRECTORIES($ENV{HOME} ${SCAPI_BASE_DIR}/install/include
         ${SCAPI_BASE_DIR}/lib/OTExtensionBristol $ENV{HOME}/libOTe $ENV{HOME}/libOTe/cryptoTools
-            usr/local/opt/openssl@1.1/include)
+            /usr/local/opt/openssl@1.1/include)
     link_directories(/usr/ssl/lib/ $ENV{HOME}/libscapi/install/lib /usr/local/opt/openssl@1.1/lib)
 
 else()
