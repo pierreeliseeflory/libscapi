@@ -146,10 +146,8 @@ MPCProtocol::MPCProtocol(string protocolName, int argc, char* argv[], bool initC
 MPCProtocol::~MPCProtocol()
 {
     delete timer;
-    long totalSent = 0, totalRecv = 0;
     json party = json::array();
-    for (size_t idx = 0; idx < parties.size(); idx++)
-    {
+    for (int idx = 0; idx < parties.size(); idx++) {
         if(partyID == idx) continue;
 
         json commData = json::object();
@@ -160,14 +158,12 @@ MPCProtocol::~MPCProtocol()
     }
 
     // write data to file
-    try
-    {
+    try {
         string fileName = "partyCommData" + to_string(partyID) + ".json";
         ofstream file(fileName, ostream::out);
         file << party;
     }
-    catch (exception& e)
-    {
+    catch (exception& e) {
         cout << "Exception thrown :" << e.what() << endl;
     }
 }

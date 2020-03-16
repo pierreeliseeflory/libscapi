@@ -7,7 +7,7 @@
 
  void CircuitConverter::convertBristolToScapi(string bristolFileName, string scapiFileName, int numParties, bool isMultiParty){
     
-    int inFan, outFan, input0, input1, output, numberOfGates, numberOfOutputs, numberOfWires;
+    int inFan, outFan, input0   , output, numberOfGates, numberOfOutputs, numberOfWires;
      vector<int> numInputsPerParty(numParties);
     string type;
 
@@ -17,9 +17,7 @@
     bristolfile.open(bristolFileName);
     scapiFile.open(scapiFileName);
 
-    int temp;
-    if (bristolfile.is_open() && scapiFile.is_open())
-    {
+    if (bristolfile.is_open() && scapiFile.is_open()) {
 
         bristolfile >> numberOfGates;//get the gates
         scapiFile << numberOfGates << " "; //print number of gates
@@ -70,21 +68,11 @@
                 bristolfile >> input0;
                 scapiFile << input0 << " ";
             }
-//            bristolfile >> input0;
-//            scapiFile << input0 << " ";
-//
-//            if (inFan != 1)//a 2 input 1 output gate - regualr gate, else we have a not gate
-//            {
-//                bristolfile >> input1;
-//                scapiFile << input1 << " ";
-//            }
 
             for (int j=0; j<outFan; j++){
                 bristolfile >> output;
                 scapiFile << output << " ";
             }
-//            bristolfile >> output;
-//            scapiFile << output << " ";
 
             bristolfile >> type;
 

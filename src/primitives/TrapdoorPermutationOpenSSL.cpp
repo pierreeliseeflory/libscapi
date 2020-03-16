@@ -168,14 +168,14 @@ KeyPair OpenSSLRSAPermutation::generateKey(int keySize) {
 	biginteger privExp = opensslbignum_to_biginteger(pair->d);
 
 #else
-	BIGNUM **n, **e, **d;
-	*n = BN_new();
-	*e = BN_new();
-	*d = BN_new();
-	RSA_get0_key(pair,(const BIGNUM**)n, (const BIGNUM**)e, (const BIGNUM**)d);
-    biginteger mod = opensslbignum_to_biginteger(*n);
-    biginteger pubExp = opensslbignum_to_biginteger(*e);
-    biginteger privExp = opensslbignum_to_biginteger(*d);
+	BIGNUM *n, *e, *d;
+	n = BN_new();
+	e = BN_new();
+	d = BN_new();
+	RSA_get0_key(pair, (const BIGNUM **)&n, (const BIGNUM **)&e, (const BIGNUM **) &d);
+    biginteger mod = opensslbignum_to_biginteger(n);
+    biginteger pubExp = opensslbignum_to_biginteger(e);
+    biginteger privExp = opensslbignum_to_biginteger(d);
 #endif
     KeyPair kp(new RSAPublicKey(mod, pubExp), new RSAPrivateKey(mod, privExp));
 	RSA_free(pair);

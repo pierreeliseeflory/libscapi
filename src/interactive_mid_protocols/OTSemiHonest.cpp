@@ -28,7 +28,6 @@ void OTSemiHonestDDHOnGroupElementSenderMsg::initFromString(const string & row) 
 
 string OTSemiHonestDDHOnByteArraySenderMsg::toString() {
 	string output = u->toString() + ":";
-	const byte * uc = &(v0[0]);
 	output += string(reinterpret_cast<char const*>(v0.data()), v0.size());
 	output += ":";
 	output += string(reinterpret_cast<char const*>(v1.data()), v1.size());

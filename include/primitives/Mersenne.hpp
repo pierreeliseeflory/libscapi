@@ -96,7 +96,7 @@ public:
         int  u, v, q, r;
         long u0, v0, u1, v1, u2, v2;
 
-        int aneg = 0, bneg = 0;
+        int aneg = 0;
 
         if (a < 0) {
             if (a < -NTL_MAX_LONG) Error("XGCD: integer overflow");
@@ -107,7 +107,6 @@ public:
         if (b < 0) {
             if (b < -NTL_MAX_LONG) Error("XGCD: integer overflow");
             b = -b;
-            bneg = 1;
         }
 
         u1=1; v1=0;
@@ -519,7 +518,7 @@ public:
         __uint128_t *m128 = (__uint128_t *) &m64;
 
         // mpn_mul ( (mp_limb_t *)m128, (mp_limb_t *)&elem, 2,	(mp_limb_t *)&(f2.elem), 2);
-        __uint128_t res, low, low128bit , hign,highShift1;
+        __uint128_t res, low, low128bit, highShift1;
 
         low = (m128[0] & p);
         low128bit = (m128[0]>>127);

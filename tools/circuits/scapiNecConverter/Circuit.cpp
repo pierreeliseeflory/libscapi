@@ -10,7 +10,6 @@ cout<<fileName<<endl;
 
     int type, numOfinputsForParty, numOfoutputsForParty;
     int numberOfGates, currentPartyNumber;
-    int gateIndex = 0;
     ifstream myfile;
     maxWireIndex = 0;
 

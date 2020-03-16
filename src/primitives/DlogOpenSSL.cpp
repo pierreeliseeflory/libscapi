@@ -121,7 +121,8 @@ void OpenSSLDlogZpSafePrime::createRandomOpenSSLDlogZp(int numBits) {
         BN_rand_range(g, p);
         BN_mod_sqr(g, g, p, _ctx.get());
     }
-    int success = DH_set0_pqg(_dlog.get(), p, q, g);
+
+    DH_set0_pqg(_dlog.get(), p, q, g);
 
 #endif
 }
@@ -1260,13 +1261,11 @@ shared_ptr<GroupElement> OpenSSLDlogECF2m::encodeByteArrayToGroupElement(const v
 const vector<unsigned char> OpenSSLDlogECF2m::decodeGroupElementToByteArray(GroupElement* groupElement) {
 	auto point = dynamic_cast<OpenSSLECF2mPoint*>(groupElement);
 	// Checks that the element is the correct object.
-	if (point == NULL) {
+	if (point == NULL)
 		throw invalid_argument("element type doesn't match the group type");
-	}
-
 
     vector<byte> vec(100);
-    bool valid = EC_POINT_is_on_curve(curve.get(), point->getPoint().get(), ctx.get());
+    EC_POINT_is_on_curve(curve.get(), point->getPoint().get(), ctx.get());
 
     int size = EC_POINT_point2oct(curve.get(),
                                   point->getPoint().get(),

@@ -78,7 +78,6 @@ vector<shared_ptr<CommParty>> MPCCommunication::setCommunication(int id, int num
     vector<int> ports(numParties);
     vector<string> ips(numParties);
 
-    int counter = 0;
     for (int i = 0; i < numParties; i++) {
         portString = "party_" + to_string(i) + "_port";
         ipString = "party_" + to_string(i) + "_ip";
@@ -88,11 +87,9 @@ vector<shared_ptr<CommParty>> MPCCommunication::setCommunication(int id, int num
         ips[i] = cf.Value("", ipString);
     }
 
-    SocketPartyData me, other;
-
     for (int i=0; i<numParties; i++){
 
-
+        SocketPartyData me, other;
         if (i < id) {// This party will be the receiver in the protocol
 
             me = SocketPartyData(boost_ip::address::from_string(ips[id]), ports[id] + i);

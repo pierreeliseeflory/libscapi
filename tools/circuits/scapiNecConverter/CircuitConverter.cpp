@@ -12,7 +12,6 @@ void CircuitConverter::convertScapiCircuit(string scapiFileName, string necFileN
     necFile.open(necFileName);
 
     int maxWireIndex = circuit->getMaxWireIndex() + 1;
-    int temp;
     if (necFile.is_open())
     {
         auto depths = circuit->getDepths();
@@ -23,7 +22,7 @@ void CircuitConverter::convertScapiCircuit(string scapiFileName, string necFileN
         necFile << circuit->getNrOfGates() << endl;
         //print the number of wires
 
-        //Nec protocol requires that the number of inputs and outputs will be a multipliccation of 32 (size of int).
+        //Nec protocol requires that the number of inputs and outputs will be a multiplication of 32 (size of int).
         //IOn case that the numbers are not in the required size, qe add dummy indices.
         int alignedInput = ((circuit->getNrOfInput() + 128 - 1) / 128) * 128;
         int alignedOutput = ((circuit->getNrOfOutput() + 128- 1) / 128) * 128;
@@ -31,7 +30,7 @@ void CircuitConverter::convertScapiCircuit(string scapiFileName, string necFileN
         necFile << circuit->getNrOfGates() + alignedInput<< endl;
         //print the maximum number of and gates in round
         int max = 0;
-        for (int i=0; i<depths.size(); i++){
+        for (size_t i=0; i<depths.size(); i++){
             if (max < depths[i]){
                 max = depths[i];
             }
@@ -45,7 +44,7 @@ void CircuitConverter::convertScapiCircuit(string scapiFileName, string necFileN
         //print the input wires
         for (int i=0; i<circuit->getNrOfParties(); i++){
             auto partyInputs = circuit->getPartyInputs(i);
-            for (int j=0; j<partyInputs.size(); j++){
+            for (size_t j=0; j<partyInputs.size(); j++){
                 necFile << partyInputs[j] << endl;
             }
         }
@@ -59,7 +58,7 @@ void CircuitConverter::convertScapiCircuit(string scapiFileName, string necFileN
         //print the output wires
         for (int i=0; i<circuit->getNrOfParties(); i++){
             auto partyOutputs = circuit->getPartyOutputs(i);
-            for (int j=0; j<partyOutputs.size(); j++){
+            for (size_t j=0; j<partyOutputs.size(); j++){
                 necFile << partyOutputs[j] << endl;
                 lastOutput = partyOutputs[j];
             }

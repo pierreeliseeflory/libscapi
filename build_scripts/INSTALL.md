@@ -6,7 +6,7 @@
 - sudo apt-get update
 - sudo apt-get install -y git
 - sudo apt-get install -y build-essential
-- sudo apt-get install -y libssl-dev libgmp3-dev cmake liblog4cpp5-dev libboost-all-dev
+- sudo apt-get install -y libssl-dev libgmp3-dev cmake liblog4cpp5-dev zlib1g-dev
 
 #### CentOS 7.3
 - sudo yum groupinstall -y 'Development Tools'
@@ -21,11 +21,20 @@
 - brew link openssl
 - brew install nasm log4cpp
 
+#### boost installation
+- wget https://dl.bintray.com/boostorg/release/1.71.0/source/boost_1_71_0.tar.bz2
+- tar -xf boost_1_71_0.tar.bz2
+- cd boost_1_71_0/
+- ./bootstrap.sh --prefix=/usr && ./b2 stage threading=multi link=shared 
+- sudo ./b2 install threading=multi link=shared
+
+**NOTE**: If you installed boost not on custom location you should add parameter to `make`:
+`make BOOST_ROOT=<path>`
+
 ### Build libscapi
 - from the user home directory, for example /home/ab/ (this is a limitation in the current version, will be fixed shortly)
 - git clone https://github.com/cryptobiu/libscapi.git
 - cd libscapi
 - make
 
-**NOTE**: If you installed boost not on custom location you should add parameter to `make`:
-`make BOOST_ROOT=<path>`
+

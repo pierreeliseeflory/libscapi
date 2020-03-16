@@ -48,24 +48,20 @@ endif
 ifeq ($(uname_arch), x86_64)
 	OUT_DIR        = obj obj/primitives obj/interactive_mid_protocols obj/mid_layer obj/comm obj/infra obj/cryptoInfra \
 	obj/circuits obj/circuits_c obj/tools/scapiNecConverter obj/tools/scapiBristolConverter
-	CPP_OPTIONS   := -g -std=$(GCC_STANDARD) $(INC) -mavx -maes -msse4.1 -mpclmul -Wall \
-	-Wno-uninitialized -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-variable -Wno-unused-result \
-	-Wno-sign-compare -Wno-parentheses -Wno-ignored-attributes -O3 -fPIC
+	CPP_OPTIONS   := -g -std=$(GCC_STANDARD) $(INC) -mavx -maes -msse4.1 -mpclmul -Wall -Wno-ignored-attributes \
+	-Wno-maybe-uninitialized -O3 -fPIC
 endif
 ifeq ($(uname_arch), armv7l)
 	OUT_DIR        = obj obj/primitives obj/interactive_mid_protocols obj/mid_layer obj/comm obj/infra obj/cryptoInfra \
 	obj/tools/scapiNecConverter obj/tools/scapiBristolConverter
-	CPP_OPTIONS   := -g -std=$(GCC_STANDARD) $(INC) -mfpu=neon -Wall -Wno-narrowing -Wno-uninitialized \
-	-Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-variable -Wno-unused-result \
-	-Wno-sign-compare -Wno-parentheses -Wno-ignored-attributes -O3 -fPIC
+	CPP_OPTIONS   := -g -std=$(GCC_STANDARD) $(INC) -mfpu=neon -Wall -Wno-ignored-attributes \
+	-Wno-maybe-uninitialized -O3 -fPIC
 endif
 ifeq ($(uname_arch), aarch64)
 	OUT_DIR        = obj obj/primitives obj/interactive_mid_protocols obj/mid_layer obj/comm obj/infra obj/cryptoInfra \
 	obj/circuits obj/tools/scapiNecConverter obj/tools/scapiBristolConverter
-	CPP_OPTIONS   := -g -std=$(GCC_STANDARD) $(INC) -Wall -Wno-narrowing -Wno-uninitialized \
-	-Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-variable -Wno-unused-result \
-	-Wno-sign-compare -Wno-parentheses -Wno-ignored-attributes -Wno-return-type \
-	 -O3 -fPIC -march=armv8-a+crypto -flax-vector-conversions
+	CPP_OPTIONS   := -g -std=$(GCC_STANDARD) $(INC) -Wall -Wall -Wno-ignored-attributes \
+	-Wno-maybe-uninitialized -O3 -fPIC
 endif
 
 $(COMPILE.cpp) = g++ -c $(CPP_OPTIONS) -o $@ $<

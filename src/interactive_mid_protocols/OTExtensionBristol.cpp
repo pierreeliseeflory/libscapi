@@ -158,7 +158,7 @@ shared_ptr<OTBatchSOutput> OTExtensionBristolSender::transfer(OTBatchSInput * in
             }
             delete [] counters;
             delete [] output;
-            delete aes;
+            EVP_CIPHER_CTX_free(aes);
         }
 
         //If this if the general case we need another round of communication using the channel member, since OT bristol only works on random case.
@@ -314,7 +314,6 @@ shared_ptr<OTBatchROutput> OTExtensionBristolReceiver::transfer(OTBatchRInput * 
 #else
             auto aes = EVP_CIPHER_CTX_new();
 #endif
-            int outLength;
             auto outputArr = new byte[16 * factor];
 
             for (int i=0; i < (int) nOTsReal; i++){
@@ -325,7 +324,7 @@ shared_ptr<OTBatchROutput> OTExtensionBristolReceiver::transfer(OTBatchRInput * 
             }
             delete [] counters;
             delete [] outputArr;
-            delete aes;
+            EVP_CIPHER_CTX_free(aes);
         }
 
         int size = elementSize/8 * nOTsReal;
