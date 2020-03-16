@@ -17,7 +17,6 @@ addons:
     sources:
       - mhier/libboost-latest
       - ubuntu-toolchain-r-test
-      - llvm-toolchain-precise-3.8
     packages:
       - g++-7
       - libssl-dev
