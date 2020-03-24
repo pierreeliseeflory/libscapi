@@ -2,10 +2,8 @@
 // Created by liork on 04/11/2019.
 //
 
-
+#ifdef __aarch64__
 #include "../../include/interactive_mid_protocols/OTExtensionEncrypto.hpp"
-
-
 
 OTExtensionEncryptoSender::OTExtensionEncryptoSender(string ipAddress, int port)
 {
@@ -84,3 +82,5 @@ shared_ptr<OTBatchROutput> OTExtensionEncryptoReceiver::transfer(OTBatchRInput *
             Snd_OT, Rec_OT, m_nNumOTThreads, m_fMaskFct);
     CBitVector * data(&response);
 }
+
+#endif
