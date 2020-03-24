@@ -35,8 +35,9 @@ OBJ_FILES     += $(patsubst tools/circuits/scapiNecConverter/%.cpp,obj/tools/sca
 GCC_STANDARD = c++14
 
 ifeq ($(uname_os), Linux)
-	INC            = -Iinstall/include -Iinstall/include/OTExtensionBristol -Iinstall/include/libOTe \
-	 -Iinstall/include/libOTe/cryptoTools -I$(HOME) -I$(HOME)/OTExtensionBristol
+    INC            = -Iinstall/include -Iinstall/include/OTExtensionBristol -Iinstall/include/libOTe \
+	 -Iinstall/include/libOTe/cryptoTools -I$(HOME) -I$(HOME)/OTExtensionBristol -I$(HOME)/OTExtension/ \
+	 -I$(HOME)/OTExtension/extern/ENCRYPTO_utils/src/ -I$(HOME)/OTExtension/extern/ENCRYPTO_utils/extern/relic/include/
     LIBRARIES_DIR  = -Linstall/lib
 endif
 ifeq ($(uname_os), Darwin)
@@ -95,7 +96,7 @@ ifeq ($(uname_arch), x86_64)
     libs: compile-ntl compile-blake compile-libote compile-otextension-bristol compile-kcp
 endif
 ifeq ($(uname_arch), aarch64)
-    libs:  compile-ntl compile-kcp
+    libs:  compile-ntl compile-kcp compile-otextension-encrypto
 endif
 endif # Linux c++14
 ifeq ($(uname_os), Darwin)
@@ -198,6 +199,16 @@ compile-kcp:
 	@mv $(builddir)/KCP/ikcp.a install/lib
 	@touch compile-kcp
 
+compile-otextension-encrypto:
+	@echo "Compiling the OTExtension Encrypto group library..."
+	@cp -r lib/OTExtensionEncrypto $(builddir)/OTExtensionEncrypto
+	@cmake $(builddir)/OTExtensionEncrypto/CMakeLists.txt -DCMAKE_INSTALL_PREFIX=$(builddir)/OTExtensionEncrypto
+	@$(MAKE) -C $(builddir)/OTExtensionEncrypto CXX=$(CXX)
+	@$(MAKE) -C $(builddir)/OTExtensionEncrypto CXX=$(CXX) install
+	@cp -r $(builddir)/OTExtensionEncrypto/include $(PWD)/install/include/OTExtensionEncrypto
+	@cp $(builddir)/OTExtensionEncrypto/lib/*.a $(PWD)/install/lib
+	@touch compile-otextension-encrypto
+
 #### Tests compilation ####
 .PHONY: compile-tests
 compile-tests:
@@ -232,6 +243,11 @@ clean-kcp:
 	@echo "Cleaning KCP library"
 	@rm -rf $(builddir)/KCP/
 	@rm -f compile-kcp
+
+clean-otextension-encrypto:
+	@echo "Cleaning OTExtensionEncrypto library"
+	@rm -rf $(builddir)/OTExtensionEncrypto/
+	@rm -f compile-otextension-encrypto
 
 clean-cpp:
 	@echo "cleaning .obj files"

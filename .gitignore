@@ -16,23 +16,7 @@
 #scapi build
 install/*
 build/*
-compile-miracl
-compile-otextension
-compile-miracl-cpp
-compile-scgarbledcircuit
-compile-otextension-bristol
-compile-otextension-malicious
-compile-ntl
-compile-blake
-prepare-emp
-compile-emp-m2pc
-compile-emp-ot
-compile-emp-tool
-compile-json
-compile-boost
-compile-openssl
-compile-libote
-compile-kcp
+compile-*
 .cproject
 .project
 protocols/GMW/CMakeFiles/*
