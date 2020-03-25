@@ -58,10 +58,28 @@ For detailed instructions, see [INSTALL.md](build_scripts/INSTALL.md)
 
 ### Implementations by other Academic Institutes
 
-##### Cryptography Research at Oragon State University : LibOTE A fast, portable, and easy to use Oblivious Transfer Libary
+##### Cryptography Research at Oregon State University : LibOTE A fast, portable, and easy to use Oblivious Transfer Library
 [https://github.com/osu-crypto/libOTe](https://github.com/osu-crypto/libOTe)
 
-This library provides several different classes of OT protocols. First is the base OT protocol of Naor Prinkas [NP00]. This protocol bootstraps all the other OT extension protocols. Within the OT extension protocols, we have 1-out-of-2, 1-out-of-N and ~K-out-of-N, both in the semi-honest and malicious settings. All implementations are highly optimized using fast SSE instructions and vectorization to obtain optimal performance both in the single and multi-threaded setting. See the Performance section for a comparison between protocols and to other libraries.Networking can be performed using both the sockets provided by the library and external socket classes. 
+This library provides several different classes of OT protocols. First is the base OT protocol of Naor-Prinkas [NP00].  
+This protocol bootstraps all the other OT extension protocols. Within the OT extension protocols, 
+we have 1-out-of-2, 1-out-of-N and ~K-out-of-N, both in the semi-honest and malicious settings.  
+All implementations are highly optimized using fast SSE instructions and vectorization to obtain  
+optimal performance both in the single and multi-threaded setting.  
+See the Performance section for a comparison between protocols and to other libraries.  
+Networking can be performed using both the sockets provided by the library and external socket classes.
+
+##### Cryptography and Privacy Engineering Group at TU Darmstadt : OTExtension
+[https://github.com/encryptogroup/OTExtension](https://github.com/encryptogroup/OTExtension)
+
+An OT extension library for ARM64 processors. The library implement this OT Extension algorithms:
+
+- General OT
+- correlated OT
+- Global correlated OT
+- Sender random OT
+- receiver random OT
+
 
 ##### University of Bristol: Advanced Protocols for Real-world Implementation of Computational Oblivious Transfers
 [https://github.com/bristolcrypto/apricot](https://github.com/bristolcrypto/apricot)
@@ -74,23 +92,34 @@ This library provides several different classes of OT protocols. First is the ba
 ##### OpenSSL
 [https://www.openssl.org/](https://www.openssl.org/)
 
-OpenSSL is an open source project that provides a robust, commercial-grade, and full-featured toolkit for the Transport Layer Security (TLS) and Secure Sockets Layer (SSL) protocols. It is also a general-purpose cryptography library. For more information about the team and community around the project, or to start making your own contributions, start with the community page. To get the latest news, download the source, and so on, please see the sidebar or the buttons at the top of every page.
+OpenSSL is an open source project that provides a robust, commercial-grade, and full-featured toolkit for the 
+Transport Layer Security (TLS) and Secure Sockets Layer (SSL) protocols.  
+It is also a general-purpose cryptography library. For more information about the team and community around the project,    
+or to start making your own contributions, start with the community page.  
+To get the latest news, download the source, and so on, please see the sidebar or the buttons at the top of every page.
 
 ##### The GNU Multiple Precision Arithmetic Library (GMP)
 [https://gmplib.org/](https://gmplib.org/)
 
-GMP is a free library for arbitrary precision arithmetic, operating on signed integers, rational numbers, and floating-point numbers. There is no practical limit to the precision except the ones implied by the available memory in the machine GMP runs on. GMP has a rich set of functions, and the functions have a regular interface.
-The main target applications for GMP are cryptography applications and research, Internet security applications, algebra systems, computational algebra research, etc.
+GMP is a free library for arbitrary precision arithmetic, operating on signed integers, rational numbers,  
+and floating-point numbers. There is no practical limit to the precision except the ones implied by the  
+available memory in the machine GMP runs on. GMP has a rich set of functions, and the functions have a regular interface.
+The main target applications for GMP are cryptography applications and research,  
+Internet security applications, algebra systems, computational algebra research, etc.
 
 ##### NTL: A Library for doing Number Theory- Victor Shoup
 [http://www.shoup.net/ntl/](http://www.shoup.net/ntl/)
 
-NTL is a high-performance, portable C++ library providing data structures and algorithms for manipulating signed, arbitrary length integers, and for vectors, matrices, and polynomials over the integers and over finite fields.On modern platforms supporting C++11, NTL can be compiled in thread safe and exception safe modes. 
+NTL is a high-performance, portable C++ library providing data structures and algorithms for manipulating signed,  
+arbitrary length integers, and for vectors, matrices, and polynomials over the integers and over finite fields.  
+On modern platforms supporting C++11, NTL can be compiled in thread safe and exception safe modes. 
 
-##### Boost 1.64
+##### Boost
 [http://www.boost.org/](http://www.boost.org/)
 
-Boost provides free peer-reviewed portable C++ source libraries. We emphasize libraries that work well with the C++ Standard Library. Boost libraries are intended to be widely useful, and usable across a broad spectrum of applications
+Boost provides free peer-reviewed portable C++ source libraries.  
+We emphasize libraries that work well with the C++ Standard Library.  
+Boost libraries are intended to be widely useful, and usable across a broad spectrum of applications.
 
 ##### KCP
 [https://github.com/skywind3000/kcp/blob/master/README.en.md](https://github.com/skywind3000/kcp/blob/master/README.en.md)
