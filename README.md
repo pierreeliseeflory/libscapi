@@ -75,10 +75,10 @@ Networking can be performed using both the sockets provided by the library and e
 An OT extension library for ARM64 processors. The library implement this OT Extension algorithms:
 
 - General OT
-- correlated OT
+- Correlated OT
 - Global correlated OT
 - Sender random OT
-- receiver random OT
+- Receiver random OT
 
 
 ##### University of Bristol: Advanced Protocols for Real-world Implementation of Computational Oblivious Transfers
