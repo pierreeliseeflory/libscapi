@@ -3,7 +3,7 @@
 //
 #include <../../include/cryptoInfra/Protocol.hpp>
 
-string CmdParser::getKey(string parameter)
+string CmdParser::getKey(const string & parameter)
 {
     if (parameter[0] == '-')
         return parameter.substr(1);
@@ -26,7 +26,6 @@ string CmdParser::getValueByKey(vector<pair<string, string>> arguments, string k
 
 vector<pair<string, string>> CmdParser::parseArguments(string protocolName, int argc, char* argv[])
 {
-    string key, value;
 
     //Put the protocol name in the vector pairs
     vector<pair<string, string>> arguments;
@@ -35,10 +34,10 @@ vector<pair<string, string>> CmdParser::parseArguments(string protocolName, int 
     //Put all other parameters in the map
     for(int i=1; i<argc; i+=2)
     {
-
-        key = getKey(string(argv[i]));
-        value = getKey(string(argv[i+1]));
-        arguments.emplace_back(make_pair(key, value));
+        string key(getKey(string(argv[i])));
+        string value(getKey(string(argv[i+ 1])));
+        pair <string, string> p = make_pair(key, value);
+        arguments.emplace_back(p);
 
         cout<<"key = "<< key <<" value = "<< value <<endl;
     }
@@ -145,7 +144,6 @@ MPCProtocol::MPCProtocol(string protocolName, int argc, char* argv[], bool initC
 
 MPCProtocol::~MPCProtocol()
 {
-    delete timer;
     json party = json::array();
     for (int idx = 0; idx < parties.size(); idx++) {
         if(partyID == idx) continue;
@@ -156,16 +154,11 @@ MPCProtocol::~MPCProtocol()
         commData["bytesReceived"] = parties[idx].get()->bytesIn;
         party.insert(party.end(), commData);
     }
+    string fileName = "partyCommData" + to_string(partyID) + ".json";
+    timer->analyzeComm(party, fileName);
 
-    // write data to file
-    try {
-        string fileName = "partyCommData" + to_string(partyID) + ".json";
-        ofstream file(fileName, ostream::out);
-        file << party;
-    }
-    catch (exception& e) {
-        cout << "Exception thrown :" << e.what() << endl;
-    }
+    if(timer != nullptr)
+        delete timer;
 }
 
 void MPCProtocol::initTimes(){
@@ -192,7 +185,7 @@ void MPCProtocol::run(){
 
 }
 
-void MPCProtocol::roundFunctionSameMsg(byte* sendData, byte* receiveData, int msgSize){
+void MPCProtocol::roundFunctionSameMsg(byte* sendData, byte* receiveData, size_t msgSize){
     vector<thread> threads(numThreads);
     //Split the work to threads. Each thread gets some parties to work on.
     for (int t=0; t<numThreads; t++) {

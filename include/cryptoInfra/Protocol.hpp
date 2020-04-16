@@ -41,7 +41,7 @@ using namespace std;
 
 class CmdParser {
 public:
-    string getKey(string parameter);
+    string getKey(const string & parameter);
     vector<pair<string, string>> parseArguments(string protocolName, int argc, char* argv[]);
     string getValueByKey(vector<pair<string, string>>arguments, string key);
 };
@@ -66,6 +66,7 @@ private:
     CmdParser parser;
 protected:
     vector<pair<string, string>> arguments;
+    Measurement* timer;
 
 public:
     Protocol(string protocolName, int argc, char* argv[]);
@@ -93,7 +94,6 @@ private:
     void exchangeDataDiffInput(byte* sendData, byte* receiveData, int first, int last, int msgSize);
 protected:
 
-    Measurement* timer;
     MPCCommunication comm;
     vector<shared_ptr<CommParty>> parties;
 
@@ -115,7 +115,7 @@ public:
      * The sendData array contains the message that should be sent to all the other parties.
      * The receiveData array will be filled with all the messages that the other parties sent to this party, ordered by the party id index.
      */
-    void roundFunctionSameMsg(byte* sendData, byte* receiveData, int msgSize);
+    void roundFunctionSameMsg(byte* sendData, byte* receiveData, size_t msgSize);
 
     /**
      * This function sends a unique message to each one of the other parties and receive data from all the other parties.

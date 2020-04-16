@@ -61,15 +61,16 @@ using json = nlohmann::json;
 class Measurement {
 public:
     Measurement(Protocol &protocol);
-    Measurement(Protocol &protocol, vector<string> names);
-    Measurement(string protocolName, int internalIterationsNumber, int partyId, int partiesNumber);
-    Measurement(string protocolName, int internalIterationsNumber, int partyId, int partiesNumber,
-            vector<string> names);
+    Measurement(Protocol &protocol, vector<string> &names);
+    Measurement(const string &protocolName, int internalIterationsNumber, int partyId, int partiesNumber);
+    Measurement(const string & protocolName, int internalIterationsNumber, int partyId, int partiesNumber,
+                vector<string> & names);
     void addTaskNames(vector<string> & names);
     ~Measurement();
-    void startSubTask(string taskName, int currentIterationNum);
-    void endSubTask(string taskName, int currentIterationNum);
-    void writeData(string key, string value);
+    void startSubTask(const string &taskName, int currentIterationNum);
+    void endSubTask(const string &taskName, int currentIterationNum);
+    void writeData(const string &key, const string &value);
+    void analyzeComm(const json & j, const string &fileName);
 
 
 private:
@@ -79,13 +80,13 @@ private:
     }
 
     void init(Protocol &protocol);
-    void init(vector <string> names);
-    void setTaskNames(vector<string> & names);
-    void init(string protocolName, int internalIterationsNumber, int partyId, int partiesNumber);
-    int getTaskIdx(string name); // return the index of given task name
+    void init(const vector <string> &names);
+    void setTaskNames(const vector<string> & names);
+    void init(const string &protocolName, int internalIterationsNumber, int partyId, int partiesNumber);
+    int getTaskIdx(const string &name); // return the index of given task name
 
     void analyze(); // create JSON file with cpu times
-    void createJsonFile(json j, string fileName);
+    void createJsonFile(const json &j, const string &fileName);
 
     vector<vector<double>> *m_cpuStartTimes;
     vector<vector<double>> *m_cpuEndTimes;

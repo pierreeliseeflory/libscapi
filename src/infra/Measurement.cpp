@@ -40,22 +40,22 @@ Measurement::Measurement(Protocol &protocol) {
     init(protocol);
 }
 
-Measurement::Measurement(Protocol &protocol, vector<string> names) {
+Measurement::Measurement(Protocol &protocol, vector<string> &names) {
     init(protocol);
     init(names);
 }
 
-Measurement::Measurement(string protocolName, int internalIterationsNumber, int partyId, int partiesNumber) {
+Measurement::Measurement(const string &protocolName, int internalIterationsNumber, int partyId, int partiesNumber) {
     init(protocolName, internalIterationsNumber, partyId, partiesNumber);
 }
 
-Measurement::Measurement(string protocolName, int internalIterationsNumber, int partyId, int partiesNumber,
-        vector<string> names) {
+Measurement::Measurement(const string &protocolName, int internalIterationsNumber, int partyId, int partiesNumber,
+        vector<string> &names) {
     init(protocolName, internalIterationsNumber, partyId, partiesNumber);
     init(names);
 }
 
-void Measurement::setTaskNames(vector<string> & names) {
+void Measurement::setTaskNames(const vector<string> & names) {
     init(names);
 }
 
@@ -81,14 +81,14 @@ void Measurement::init(Protocol &protocol) {
     m_numOfParties = atoi(parser.getValueByKey(m_arguments, "numParties").c_str());
 }
 
-void Measurement::init(string protocolName, int internalIterationsNumber, int partyId, int partiesNumber) {
+void Measurement::init(const string &protocolName, int internalIterationsNumber, int partyId, int partiesNumber) {
     m_protocolName = protocolName;
     m_numberOfIterations = internalIterationsNumber;
     m_partyId = partyId;
     m_numOfParties = partiesNumber;
 }
 
-void Measurement::init(vector <string> names) {
+void Measurement::init(const vector <string> &names) {
     m_cpuStartTimes = new vector<vector<double>>(names.size(), vector<double>(m_numberOfIterations,0));
     m_cpuEndTimes = new vector<vector<double>>(names.size(), vector<double>(m_numberOfIterations, 0));
     m_names = move(names);
@@ -96,7 +96,7 @@ void Measurement::init(vector <string> names) {
 
 
 
-int Measurement::getTaskIdx(string name) {
+int Measurement::getTaskIdx(const string &name) {
     auto it = find(m_names.begin(), m_names.end(), name);
     auto idx = distance(m_names.begin(), it);
     return idx;
@@ -104,21 +104,21 @@ int Measurement::getTaskIdx(string name) {
 
 
 
-void Measurement::startSubTask(string taskName, int currentIterationNum) {
+void Measurement::startSubTask(const string &taskName, int currentIterationNum) {
     auto now = system_clock::now();
     auto ms = (double) time_point_cast<nanoseconds>(now).time_since_epoch().count() / 1000000;
     int taskIdx = getTaskIdx(taskName);
     (*m_cpuStartTimes)[taskIdx][currentIterationNum] = ms;
 }
 
-void Measurement::endSubTask(string taskName, int currentIterationNum) {
+void Measurement::endSubTask(const string &taskName, int currentIterationNum) {
     int taskIdx = getTaskIdx(taskName);
     auto now = system_clock::now();
     auto ms = (double) time_point_cast<nanoseconds>(now).time_since_epoch().count() / 1000000;
     (*m_cpuEndTimes)[taskIdx][currentIterationNum] = ms - (*m_cpuStartTimes)[taskIdx][currentIterationNum];
 }
 
-void Measurement::writeData(string key, string value) {
+void Measurement::writeData(const string &key, const string &value) {
     if (m_auxiliaryData.find(key) == m_auxiliaryData.end ())
         m_auxiliaryData[key] = value;
     else
@@ -167,7 +167,13 @@ void Measurement::analyze() {
     createJsonFile(party, fileName);
 }
 
-void Measurement::createJsonFile(json j, string fileName) {
+void Measurement::analyzeComm(const json & j, const string &fileName) {
+
+    createJsonFile(j, fileName);
+
+}
+
+void Measurement::createJsonFile(const json &j, const string &fileName) {
 
     try {
         ofstream myfile (fileName, ostream::out);

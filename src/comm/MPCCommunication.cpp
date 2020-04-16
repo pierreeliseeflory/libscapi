@@ -5,7 +5,8 @@
 #include "../../include/comm/MPCCommunication.hpp"
 
 
-vector<shared_ptr<ProtocolPartyData>> MPCCommunication::setCommunication(boost::asio::io_service & io_service, int id, int numParties, string configFile) {
+vector<shared_ptr<ProtocolPartyData>> MPCCommunication::setCommunication(boost::asio::io_service & io_service, int id,
+        int numParties, const string & configFile) {
 cout<<"in communication"<<endl;
 
 cout<<"num parties = "<<numParties<<endl;
@@ -116,4 +117,28 @@ vector<shared_ptr<CommParty>> MPCCommunication::setCommunication(int id, int num
     }
 
     return parties;
+}
+
+void MPCCommunication::printNetworkStats(vector<shared_ptr<ProtocolPartyData>> &parties, int partyID) {
+    json party = json::array();
+    for (int idx = 0; idx < parties.size(); idx++) {
+        if(partyID == idx) continue;
+
+        json commData = json::object();
+        commData["partyId"] = idx;
+        commData["bytesSent"] = parties[idx].get()->getChannel().get()->bytesOut;
+        commData["bytesReceived"] = parties[idx].get()->getChannel().get()->bytesIn;
+        party.insert(party.end(), commData);
+    }
+
+    string fileName = "partyCommData" + to_string(partyID) + ".json";
+
+    try {
+        ofstream myfile (fileName, ostream::out);
+        myfile << party;
+    }
+
+    catch (exception& e) {
+        cout << "Exception thrown : " << e.what() << endl;
+    }
 }
