@@ -91,6 +91,7 @@ void Measurement::init(const string &protocolName, int internalIterationsNumber,
 void Measurement::init(const vector <string> &names) {
     m_cpuStartTimes = new vector<vector<double>>(names.size(), vector<double>(m_numberOfIterations,0));
     m_cpuEndTimes = new vector<vector<double>>(names.size(), vector<double>(m_numberOfIterations, 0));
+    m_memoryUsage = new vector<vector<double>>(names.size(), vector<double>(m_numberOfIterations, 0));
     m_names = move(names);
 }
 
@@ -116,6 +117,9 @@ void Measurement::endSubTask(const string &taskName, int currentIterationNum) {
     auto now = system_clock::now();
     auto ms = (double) time_point_cast<nanoseconds>(now).time_since_epoch().count() / 1000000;
     (*m_cpuEndTimes)[taskIdx][currentIterationNum] = ms - (*m_cpuStartTimes)[taskIdx][currentIterationNum];
+    struct rusage r_usage;
+    getrusage(RUSAGE_SELF, &r_usage);
+    (*m_memoryUsage)[taskIdx][currentIterationNum] = r_usage.ru_maxrss;
 }
 
 void Measurement::writeData(const string &key, const string &value) {
@@ -173,6 +177,33 @@ void Measurement::analyzeComm(const json & j, const string &fileName) {
 
 }
 
+void Measurement::analyzeMemory() {
+
+    string filePath = getcwdStr();
+    string fileName = filePath + "/party" + to_string(m_partyId) + "Memory.json";
+
+    json partyTimes = json::array();
+
+    for (size_t taskNameIdx = 0; taskNameIdx < m_names.size(); taskNameIdx++) {
+        //Write for each task name all the iteration
+        json task = json::object();
+        task["name"] = m_names[taskNameIdx];
+
+        for (int iterationIdx = 0; iterationIdx < m_numberOfIterations; iterationIdx++) {
+            ostringstream streamObj;
+            streamObj << fixed << setprecision(3) << (*m_memoryUsage)[taskNameIdx][iterationIdx];
+            task["iteration_" + to_string(iterationIdx)] = streamObj.str();
+        }
+
+        partyTimes.insert(partyTimes.begin(), task);
+    }
+
+    //party is the root of the json objects
+    json party;
+    party["times"] = partyTimes;
+    createJsonFile(party, fileName);
+}
+
 void Measurement::createJsonFile(const json &j, const string &fileName) {
 
     try {
@@ -186,9 +217,13 @@ void Measurement::createJsonFile(const json &j, const string &fileName) {
 }
 
 
+
+
 Measurement::~Measurement() {
     analyze();
+    analyzeMemory();
     delete m_cpuStartTimes;
     delete m_cpuEndTimes;
+    delete m_memoryUsage;
 }
 

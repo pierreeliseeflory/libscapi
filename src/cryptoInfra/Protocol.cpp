@@ -154,7 +154,7 @@ MPCProtocol::~MPCProtocol()
         commData["bytesReceived"] = parties[idx].get()->bytesIn;
         party.insert(party.end(), commData);
     }
-    string fileName = "partyCommData" + to_string(partyID) + ".json";
+    string fileName = "party" + to_string(partyID) + "CommData.json";
     timer->analyzeComm(party, fileName);
 
     if(timer != nullptr)
