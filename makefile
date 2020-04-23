@@ -111,7 +111,7 @@ $(OUT_DIR):
 	mkdir -p $(OUT_DIR)
 
 $(SLib): $(OBJ_FILES)
-	ar ru $@ $^ 
+	ar r $@ $^
 	ranlib $@
 
 tests: compile-tests
