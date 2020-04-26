@@ -119,7 +119,8 @@ vector<shared_ptr<CommParty>> MPCCommunication::setCommunication(int id, int num
     return parties;
 }
 
-void MPCCommunication::printNetworkStats(vector<shared_ptr<ProtocolPartyData>> &parties, int partyID) {
+void MPCCommunication::printNetworkStats(vector<shared_ptr<ProtocolPartyData>> &parties, int partyID,
+                                         vector<pair<string, string>> &arguments) {
     json party = json::array();
     for (int idx = 0; idx < parties.size(); idx++) {
         if(partyID == idx) continue;
@@ -131,7 +132,10 @@ void MPCCommunication::printNetworkStats(vector<shared_ptr<ProtocolPartyData>> &
         party.insert(party.end(), commData);
     }
 
-    string fileName = "partyCommData" + to_string(partyID) + ".json";
+    string fileName;
+    for (size_t idx = 0; idx< arguments.size(); idx++)
+        fileName += "*" + arguments[idx].second;
+    fileName += "*partyCommData.json";
 
     try {
         ofstream myfile (fileName, ostream::out);

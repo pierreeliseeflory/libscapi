@@ -47,7 +47,7 @@
 #include <algorithm>
 #include <iterator>
 #include <iomanip>
-#include <sys/resource.h>
+#include <sys/sysinfo.h>
 #include <sys/time.h>
 #include "ConfigFile.hpp"
 #include "json.hpp"

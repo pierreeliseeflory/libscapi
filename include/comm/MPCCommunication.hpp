@@ -42,7 +42,8 @@ public:
             int numParties, const string & configFile);
     vector<shared_ptr<CommParty>> setCommunication(int id, int numParties, string configFile);
 
-    void printNetworkStats(vector<shared_ptr<ProtocolPartyData>> &parties, int partyID);
+    void printNetworkStats(vector<shared_ptr<ProtocolPartyData>> &parties, int partyID,
+                           vector<pair<string, string>> &arguments);
 
 };
 

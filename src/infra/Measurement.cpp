@@ -117,9 +117,8 @@ void Measurement::endSubTask(const string &taskName, int currentIterationNum) {
     auto now = system_clock::now();
     auto ms = (double) time_point_cast<nanoseconds>(now).time_since_epoch().count() / 1000000;
     (*m_cpuEndTimes)[taskIdx][currentIterationNum] = ms - (*m_cpuStartTimes)[taskIdx][currentIterationNum];
-    struct rusage r_usage;
-    getrusage(RUSAGE_SELF, &r_usage);
-    (*m_memoryUsage)[taskIdx][currentIterationNum] = r_usage.ru_maxrss;
+    struct sysinfo systemInfo;
+    (*m_memoryUsage)[taskIdx][currentIterationNum] = systemInfo.totalram / systemInfo.mem_unit;
 }
 
 void Measurement::writeData(const string &key, const string &value) {
