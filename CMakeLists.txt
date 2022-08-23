@@ -5,13 +5,12 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mavx -maes -msse4.1 -mpclmul -DRDTSC -DTEST=AES128  -O3 -mbmi2")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mavx -maes -msse4.1 -mpclmul -O3")
 
-SET(SCAPI_BASE_DIR $ENV{HOME}/libscapi)
-SET(CMAKE_AR  "gcc-ar")
-SET(CMAKE_CXX_ARCHIVE_CREATE "<CMAKE_AR> qcs <TARGET> <LINK_FLAGS> <OBJECTS>")
-SET(CMAKE_CXX_ARCHIVE_FINISH   true)
+set(SCAPI_BASE_DIR $ENV{HOME}/libscapi)
+set(CMAKE_AR  "gcc-ar")
+set(CMAKE_CXX_ARCHIVE_CREATE "<CMAKE_AR> qcs <TARGET> <LINK_FLAGS> <OBJECTS>")
+set(CMAKE_CXX_ARCHIVE_FINISH   true)
 
-INCLUDE_DIRECTORIES($ENV{HOME} ${SCAPI_BASE_DIR}/install/include
-        ${SCAPI_BASE_DIR}/lib/OTExtensionBristol $ENV{HOME}/libOTe $ENV{HOME}/libOTe/cryptoTools)
+include_directories($ENV{HOME} ${SCAPI_BASE_DIR}/install/include)
 link_directories(/usr/ssl/lib/ $ENV{HOME}/libscapi/install/lib )
 
 
@@ -90,6 +89,8 @@ set(SOURCE_FILES
         src/infra/Measurement.cpp
         src/cryptoInfra/Protocol.cpp src/mid_layer/OpenSSLMac.cpp include/mid_layer/OpenSSLMac.h)
 
+find_package(libOTe REQUIRED)
+
 add_library(scapi ${SOURCE_FILES})
 
 add_custom_target(scapi_build ALL
@@ -97,4 +98,4 @@ add_custom_target(scapi_build ALL
         WORKING_DIRECTORY ${SCAPI_BASE_DIR}
         COMMENT "Original libscapi libs makefile target")
 
-TARGET_LINK_LIBRARIES(scapi gmp libboost_system.a libboost_thread.a pthread crypto dl ssl z)
+target_link_libraries(scapi gmp libboost_system.a libboost_thread.a pthread crypto dl ssl z oc::libOTe oc:cryptoTools)
